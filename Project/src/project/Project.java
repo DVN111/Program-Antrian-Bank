@@ -12,12 +12,12 @@ import java.util.Scanner;
 class Link {
     
     public String nama;
-    public int notel; // data item
-    public Link next; // next link in list
+    public int no_antrian; 
+    public Link next; 
 
     public Link(int d,String n) // constructor
     {
-        notel = d;
+        no_antrian = d;
         nama = n;
         
     }
@@ -25,17 +25,17 @@ class Link {
     public void displayLink() // display this link
     {
         
-        System.out.print("|"+"\t"+notel +"\t"+"|"+"\t"+nama+"\t"+"|");
+        System.out.print("|"+"\t"+no_antrian+"\t"+"|"+"\t"+nama+"\t\t   "+"|");
         
     }
-} // end class Link
+} 
 
-class FirstLastList {
+class List {
 
-    private Link first; // ref to first item
-    private Link last; // ref to last item
+    private Link first; // ref ke item pertama
+    private Link last; // ref to item terakhir
 
-    public FirstLastList() // constructor
+    public List() // constructor
     {
         first = null; // no items on list yet
         last = null;
@@ -46,61 +46,82 @@ class FirstLastList {
         return first == null;
     }
 
-    public void insertLast(int notel,String nama) // insert at end of list
+    public void insertLast(int noantrian,String nama) // insert di akhir
     {
-        Link newLink = new Link(notel,nama); // make new link
-        if (isEmpty()) // if empty list,
+        Link newLink = new Link(noantrian,nama); // membuat link baru
+        if (isEmpty()) //misal kosong
         {
-            first = newLink; // first --> newLink
+            first = newLink; // first --> newLink 
         } else {
+           
             last.next = newLink; // old last --> newLink
+            
         }
         last = newLink; // newLink <-- last
+        System.out.println(nama+" berhasil dimasukkan ke antrian");
     }
 
-    public int deleteFirst() // delete first link
-    { // (assumes non-empty list)
-        int temp = first.notel;
-        if (first.next == null) // if only one item
+    public int deleteFirst() 
+    {
+        int temp = first.no_antrian;
+        if (first.next == null) 
         {
-            last = null; // null <-- last
+            last = null; 
         }
-        first = first.next; // first --> old next
+        first = first.next; 
         return temp;
     }
 
     public void displayList() {
-        Link current = first; // start at beginning
-        while (current != null) // until end of list,
+        Link current = first; 
+        while (current != null) 
         {
             System.out.println("");
-            current.displayLink(); // print data
-            current = current.next; // move to next link
-        }
-        
+            current.displayLink(); 
+            current = current.next; 
+        }   
     }
-} // end class FirstLastList
+    
+     public boolean search(String x)
+    {
+        Link current = first;    //Initialize current
 
+        while (current != null)
+        {
+            if (current.nama.equals(x)){
+                System.out.println(x+" ditemukan");
+                current.displayLink();
+                return true;    //data found
+                 
+            }
+            current = current.next; 
+        }
+        return false;    //data not found
+    }
+     
+} 
 class LinkQueue {
 
-    private FirstLastList theList;
-
-    public LinkQueue() // constructor
+    private List theList;
+    private int no = 1;
+    
+    public LinkQueue() 
     {
-        theList = new FirstLastList();
-    } // make a 2-ended list
+        theList = new List();
+    } 
 
-    public boolean isEmpty() // true if queue is empty
+    public boolean isEmpty() 
     {
         return theList.isEmpty();
     }
 
-    public void insert(int j,String n) // insert, rear of queue
+    public void insert(String n) 
     {
-        theList.insertLast(j,n);
+        theList.insertLast(no,n);
+        no = no+1;
     }
 
-    public long remove() // remove, front of queue
+    public long remove() 
     {
         return theList.deleteFirst();
     }
@@ -109,8 +130,18 @@ class LinkQueue {
         System.out.print("Daftar Antrian Pelanggan");
         theList.displayList();
     }
-    public void exit(){
-        return;
+    
+    public void search(){
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.print("masukkan nama yang ingin dicari = ");
+        String nama = sc.next();
+        System.out.println("");
+        theList.search(nama);
+    }
+    
+    public void resetQueueNum(){
+        no=1;
     }
 } 
 
@@ -119,49 +150,61 @@ class LinkQueueApp {
     public static void main(String[] args) throws IOException {
         LinkQueue LQ = new LinkQueue();
         Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Selamat datang di program Antrian BANK");
         while (true) // interact with user
         {
             System.out.println("");
-            System.out.print("Enter first letter of ");
-            System.out.print("\na. Masukkan pelanggan ke antrian"+
-                    "\nb. Panggil antrian terdepan"+
-                    "\nc. Tampilkan Daftar Antrian Pelanggan"+
-                    "\nd. Keluar"+
+            
+            System.out.print("= Menu pilihan =");
+            System.out.print("\na. Masukkan nasabah ke antrian"+
+                    "\nb. Panggil nasabah antrian terdepan"+
+                    "\nc. Tampilkan Daftar Antrian Nasabah"+
+                    "\n-. Reset Nomor Antrian"+
+                    "\n?. Cek Nasabah Yang Mengantri Berdasarkan nama"+
+                    "\nx. Keluar"+
                     "\nMasukkan huruf : ");
             char choice = getChar();
             switch (choice) {
                 case 'a':
                     System.out.println("Menambah antrian :");
-                    System.out.print("Masukkan no antrian : ");
-                    int noAntri = sc.nextInt();
                     System.out.print("Masukkan nama : ");
                     String nama = sc.next();
-                    LQ.insert(noAntri,nama);
-                    System.out.println(nama+" berhasil dimasukkan ke antrian");
-//                    LQ.displayQueue();
+                    LQ.insert(nama);
                     System.out.println("");
                     break;
 
                 case 'b':
-                    System.out.println("Orang pertama dipanggil");
+                    System.out.println("");
+                    System.out.println("Antrian terdepan dipanggil");
                     LQ.remove();
                     LQ.displayQueue();
+                    System.out.println("");
                     break;
                     
                 case 'c':
+                    System.out.println("");
                     LQ.displayQueue();
+                    System.out.println("");
                     break;
                     
-                case 'd':
-                    LQ.exit();
+                 case'-':
+                     LQ.resetQueueNum();
+                     break;
+                    case'?':
+                        
+                        LQ.search();
+                        System.out.println("");
+                        break;
+                case 'x':
+                    return;
                     
 
                 default:
                     System.out.print("Invalid entry\n");
-            } // end switch
-        } // end while
-    } // end main()
-//--------------------------------------------------------------
+            } 
+        } 
+    } 
 
     public static String getString() throws IOException {
         InputStreamReader isr = new InputStreamReader(System.in);
@@ -169,14 +212,12 @@ class LinkQueueApp {
         String s = br.readLine();
         return s;
     }
-//--------------------------------------------------------------
 
     public static char getChar() throws IOException {
         String s = getString();
         return s.charAt(0);
     }
-//-------------------------------------------------------------
-
+    
     public static int getInt() throws IOException {
         String s = getString();
         return Integer.parseInt(s);
