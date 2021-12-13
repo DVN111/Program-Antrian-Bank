@@ -4,3 +4,4 @@ update list :
 1. automasi nomor urut nasabah
 2. menambah fungsi pencarian nasabah berdasarkan nama
 3. memperbaiki user interface 
+ 
