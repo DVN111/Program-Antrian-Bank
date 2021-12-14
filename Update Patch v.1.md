@@ -1,7 +1,7 @@
 # Program-Antrian-Bank
 Projek akhir "Program Antrian Bank" dengan mengimplementasikan Linked List dan Queue.
 update list :
-1. automasi nomor urut nasabah
-2. menambah fungsi pencarian nasabah berdasarkan nama
-3. memperbaiki user interface 
+1. Memperbagus tampilan tabel daftar antrian nasabah(class List(method displayList))
+2. Menambah user input alamat(class Link(instance variable & Constructor), class List(method insertLast)
+
  
