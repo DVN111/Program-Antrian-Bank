@@ -5,3 +5,4 @@ update list :
 2. Menambah user input alamat(class Link(instance variable & Constructor), class List(method insertLast)
 
  
+ 
