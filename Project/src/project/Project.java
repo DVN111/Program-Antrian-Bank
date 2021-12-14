@@ -12,21 +12,21 @@ import java.util.Scanner;
 class Link {
     
     public String nama;
+    public String alamat;
     public int no_antrian; 
     public Link next; 
 
-    public Link(int d,String n) // constructor
+    public Link(int d,String n,String a) // constructor
     {
         no_antrian = d;
         nama = n;
+        alamat = a;
         
     }
 
     public void displayLink() // display this link
     {
-        
-        System.out.print("|"+"\t"+no_antrian+"\t"+"|"+"\t"+nama+"\t\t   "+"|");
-        
+        System.out.println("|"+"   "+no_antrian+"   "+"|"+"\t"+nama+"\t"+"   |"+"\t"+       alamat+"\t"+"|");
     }
 } 
 
@@ -46,9 +46,9 @@ class List {
         return first == null;
     }
 
-    public void insertLast(int noantrian,String nama) // insert di akhir
+    public void insertLast(int noantrian,String nama,String alamat) // insert di akhir
     {
-        Link newLink = new Link(noantrian,nama); // membuat link baru
+        Link newLink = new Link(noantrian,nama,alamat); // membuat link baru
         if (isEmpty()) //misal kosong
         {
             first = newLink; // first --> newLink 
@@ -76,7 +76,7 @@ class List {
         Link current = first; 
         while (current != null) 
         {
-            System.out.println("");
+
             current.displayLink(); 
             current = current.next; 
         }   
@@ -115,9 +115,9 @@ class LinkQueue {
         return theList.isEmpty();
     }
 
-    public void insert(String n) 
+    public void insert(String n,String a) 
     {
-        theList.insertLast(no,n);
+        theList.insertLast(no,n,a);
         no = no+1;
     }
 
@@ -127,8 +127,12 @@ class LinkQueue {
     }
 
     public void displayQueue() {
-        System.out.print("Daftar Antrian Pelanggan");
+        System.out.println("Daftar Antrian Pelanggan");
+        System.out.println("+-------+------------------+--------------------+");
+        System.out.println("|"+" "+"Nomor"+" "+"|"+"\t"+"Nama"+"\t"+"   |"+"\t"+"   Alamat"+"\t"+"|");
+        System.out.println("+-------+------------------+--------------------+");
         theList.displayList();
+        System.out.println("+-------+------------------+--------------------+");
     }
     
     public void search(){
@@ -170,7 +174,9 @@ class LinkQueueApp {
                     System.out.println("Menambah antrian :");
                     System.out.print("Masukkan nama : ");
                     String nama = sc.next();
-                    LQ.insert(nama);
+                    System.out.print("Masukkan alamat : ");
+                    String alamat = sc.next();
+                    LQ.insert(nama,alamat);
                     System.out.println("");
                     break;
 
